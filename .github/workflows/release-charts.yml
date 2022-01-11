@@ -1,0 +1,38 @@
+name: Release Charts
+
+on:
+  push:
+    branches:
+      - main
+env:
+  KEPTN_BOT_NAME: "Keptn Bot"
+  KEPTN_BOT_EMAIL: "keptn-bot <86361500+keptn-bot@users.noreply.github.com>"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.KEPTN_BOT_TOKEN }}
+
+      - name: Configure Git
+        working-directory: keptn
+        env:
+          KEPTN_BOT_NAME: ${{ env.KEPTN_BOT_NAME }}
+          KEPTN_BOT_EMAIL: ${{ env.KEPTN_BOT_EMAIL }}
+        run: |
+          git config user.name "$KEPTN_BOT_NAME"
+          git config user.email "$KEPTN_BOT_EMAIL"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.7.2
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.2.1
+        env:
+          CR_TOKEN: "${{ secrets.KEPTN_BOT_TOKEN }}"
