@@ -10,10 +10,10 @@ Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
 Once Helm is set up properly, add the repo as follows:
 
 ```console
-helm repo add keptn https://charts.keptn.sh
+helm repo add keptn-dev https://charts-dev.keptn.sh
 ```
 
-You can then run `helm search repo keptn` to see the charts.
+You can then run `helm search repo keptn-dev` to see the charts.
 
 Chart documentation is available in the [Keptn Docs](https://keptn.sh/docs/).
 
